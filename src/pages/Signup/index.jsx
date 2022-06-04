@@ -7,19 +7,21 @@ const Input = props => (
 )
 
 const validationSchema = yup.object({
+  name: yup.string().required('Digite seu nome'),
+  username: yup.string().required('Digite seu nome de usuário'),
   email: yup.string().required('Digite seu email').email('E-mail inválido'),
   password: yup.string().required('Digite sua senha')
 })
 
-export const Login = ({ signInUser }) => {
+export const SignUp = ({ signInUser }) => {
   const formik = useFormik({
     onSubmit: async values => {
       const res = await axios
-        .get('http://localhost:9901/login', {
-          auth: {
-            username: values.email,
-            password: values.password,
-          }
+        .post('http://localhost:9901/signup', {
+          name: values.name,
+          username: values.username,
+          email: values.email,
+          password: values.password,
         })
 
       signInUser(res.data)
@@ -34,9 +36,43 @@ export const Login = ({ signInUser }) => {
 
   return (
     <div className="flex flex-col h-full justify-center p-12 space-y-6">
-      <h1 className="text-3xl">Acesse sua conta</h1>
+      <h1 className="text-3xl">Crie sua conta</h1>
 
       <form className="space-y-6" onSubmit={formik.handleSubmit}>
+
+        <div className="space-y-2">
+          <Input
+            name="name"
+            type="text"
+            placeholder="Nome"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            disable={formik.isSubmitting}
+          />
+          {(formik.touched.name && formik.errors.name) && (
+            <span className="text-red-500 text-sm">
+              {formik.errors.name}
+            </span>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Input
+            name="username"
+            type="text"
+            placeholder="Nome de Usuário"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            disable={formik.isSubmitting}
+          />
+          {(formik.touched.username && formik.errors.username) && (
+            <span className="text-red-500 text-sm">
+              {formik.errors.username}
+            </span>
+          )}
+        </div>
 
         <div className="space-y-2">
           <Input
@@ -77,12 +113,12 @@ export const Login = ({ signInUser }) => {
           className="w-full bg-birdBlue py-4 rounded-full disabled:opacity-50 text-lg"
           disabled={!formik.isValid || formik.isSubmitting}
         >
-          {formik.isSubmitting ? 'Enviando...' : 'Entrar'}
+          {formik.isSubmitting ? 'Enviando...' : 'Cadastrar'}
         </button>
       </form>
 
       <span className="text-sm text-silver text-center">
-        Não tem conta? <a href="/signup" className="text-birdBlue">Inscreva-se</a>
+        Já tem uma conta? <a href="/login" className="text-birdBlue">Acesse</a>
       </span>
     </div>
   )
