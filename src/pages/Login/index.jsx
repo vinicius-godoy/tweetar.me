@@ -50,7 +50,7 @@ export const Login = ({ signInUser }) => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                disable={formik.isSubmitting}
+                disabled={formik.isSubmitting}
               />
               {(formik.touched.email && formik.errors.email) && (
                 <span className="text-red-500 text-sm">
@@ -67,7 +67,7 @@ export const Login = ({ signInUser }) => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                disable={formik.isSubmitting}
+                disabled={formik.isSubmitting}
               />
               {(formik.touched.password && formik.errors.password) && (
                 <span className="text-red-500 text-sm">
