@@ -8,7 +8,7 @@ export const Home = ({ loggedInUser }) => {
   const [data, setData] = useState([])
 
   const fetchData = useCallback(async () => {
-    const res = await axios.get('http://localhost:9901/tweets', {
+    const res = await axios.get(`${import.meta.env.VITE_API_HOST}/tweets`, {
       headers: {
         'authorization': `Bearer ${loggedInUser?.accessToken}`,
       }
@@ -24,6 +24,7 @@ export const Home = ({ loggedInUser }) => {
   return (
     <>
       <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
+
       <div>
         {data.length && data?.map((tweet) => (
           <Tweet

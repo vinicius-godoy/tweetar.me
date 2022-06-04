@@ -15,7 +15,7 @@ export const Login = ({ signInUser }) => {
   const formik = useFormik({
     onSubmit: async values => {
       const res = await axios
-        .get('http://localhost:9901/login', {
+        .get(`${import.meta.env.VITE_API_HOST}/login`, {
           auth: {
             username: values.email,
             password: values.password,
