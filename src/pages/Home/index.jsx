@@ -23,7 +23,7 @@ export const Home = ({ loggedInUser }) => {
 
   return (
     <>
-      <TweetForm />
+      <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
       <div>
         {data.length && data?.map((tweet) => (
           <Tweet

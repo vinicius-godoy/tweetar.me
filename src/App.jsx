@@ -7,7 +7,7 @@ import { SignUp } from './pages/Signup'
 export const App = () => {
   const [user, setUser] = useState(null)
 
-  if (user) return <Home />
+  if (user) return <Home loggedInUser={user} />
 
   return window.location.pathname === '/signup'
     ? <SignUp signInUser={setUser} />
