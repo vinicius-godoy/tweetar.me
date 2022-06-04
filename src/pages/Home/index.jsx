@@ -4,14 +4,13 @@ import axios from 'axios'
 import { TweetForm } from "../../components/TweetForm"
 import { Tweet } from "../../components/Tweet"
 
-export const Home = () => {
+export const Home = ({ loggedInUser }) => {
   const [data, setData] = useState([])
 
   const fetchData = useCallback(async () => {
-    const token = ''
     const res = await axios.get('http://localhost:9901/tweets', {
       headers: {
-        'authorization': `Bearer ${token}`,
+        'authorization': `Bearer ${loggedInUser?.accessToken}`,
       }
     })
 
@@ -28,6 +27,7 @@ export const Home = () => {
       <div>
         {data.length && data?.map((tweet) => (
           <Tweet
+            key={tweet.id}
             name={tweet.user.name} username={tweet.user.username}
             avatar="/src/avatar.png" likes={tweet.likes.length}
           >
