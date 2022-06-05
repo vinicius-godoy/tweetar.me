@@ -8,9 +8,12 @@ import { MAX_TWEET_CHAR } from '../../constants/index'
 export const TweetForm = ({ loggedInUser, onSuccess }) => {
   const formik = useFormik({
     onSubmit: async (values, form) => {
-      await axios.post(`${import.meta.env.VITE_API_HOST}/tweets`, {
-        text: values.text
-      }, {
+      await axios({
+        method: 'post',
+        url: `${import.meta.env.VITE_API_HOST}/tweets`,
+        data: {
+          text: values.text
+        },
         headers: {
           'authorization': `Bearer ${loggedInUser.accessToken}`,
         }
