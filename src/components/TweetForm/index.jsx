@@ -31,11 +31,11 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
         <h1 className="font-bold text-xl">Página Inicial</h1>
       </div>
 
-      <form className="pl-14 text-lg flex flex-col" onSubmit={formik.handleSubmit}>
+      <form className="pl-14 text-lg flex flex-col space-y-2" onSubmit={formik.handleSubmit}>
         <textarea
           name="text"
           value={formik.values.text}
-          className="bg-transparent outline-none disabled:opacity-50"
+          className="bg-transparent outline-none resize-none disabled:opacity-50"
           placeholder="O que está acontencendo?"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

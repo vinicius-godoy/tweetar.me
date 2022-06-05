@@ -26,7 +26,7 @@ export const Home = ({ loggedInUser }) => {
       <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
 
       <div>
-        {data.length && data?.map((tweet) => (
+        {data?.map((tweet) => (
           <Tweet
             key={tweet.id} likes={tweet.likes.length}
             name={tweet.user.name} username={tweet.user.username}
