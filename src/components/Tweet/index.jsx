@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { HeartIcon as NotLiked } from '@heroicons/react/outline'
 import { HeartIcon as Liked } from '@heroicons/react/solid'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import axios from 'axios'
 
 import AvatarBlue from '../../assets/images/avatar-blue.png'
@@ -81,8 +83,11 @@ export const Tweet = ({ data, children, loggedInUser }) => {
             <img src={AvatarBlue} />
           </div>
           <div className="space-y-1">
-            <span className="font-bold text-sm">{tweet.user.name}</span>{' '}
-            <span className="text-sm text-silver">@{tweet.user.username}</span>
+            <span className="font-bold">{tweet.user.name}</span>{' '}
+            <span>@{tweet.user.username} </span>
+            <span className="text-sm text-silver">
+              • {formatDistanceToNow(new Date(tweet.created_at), { locale: ptBR })}
+            </span>
 
             <p>{children}</p>
 
