@@ -1,8 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
+import { HomeIcon, BookmarkIcon, UserIcon } from '@heroicons/react/outline'
 
 import { TweetForm } from "../../components/TweetForm"
 import { Tweet } from "../../components/Tweet"
+import Logo from '../../assets/images/codarme-logo.png'
+import AvatarBlue from '../../assets/images/avatar-blue.png'
 
 export const Home = ({ loggedInUser }) => {
   const [data, setData] = useState([])
@@ -24,16 +27,59 @@ export const Home = ({ loggedInUser }) => {
   }, [])
 
   return (
-    <>
-      <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
+    <div className="h-full flex flex-col lg:flex-row lg:justify-center lg:px-40">
+      <aside className="hidden lg:flex lg:flex-col lg:space-y-6 lg:w-1/5 lg:min-w-fit lg:pr-4">
+        <div className="pt-6">
+          <img className="w-8" src={Logo} alt="" />
+        </div>
 
-      <div>
-        {data?.map((tweet) => (
-          <Tweet key={tweet.id} data={tweet} loggedInUser={loggedInUser}>
-            {tweet.text}
-          </Tweet>
-        ))}
-      </div>
-    </>
+        <ul className="space-y-6">
+          <li className="flex justify-start items-center gap-4 text-lg font-bold">
+            <HomeIcon className="w-8 m-0" /> Página Inicial
+          </li>
+          <li className="flex justify-start items-center gap-4 text-lg font-bold">
+            <BookmarkIcon className="w-8 m-0" /> Itens Salvos
+          </li>
+          <li className="flex justify-start items-center gap-4 text-lg font-bold">
+            <UserIcon className="w-8 m-0" /> Perfil
+          </li>
+        </ul>
+
+        <div className="!mt-auto space-y-3">
+          <div className="flex gap-4">
+            <div>
+              <img src={AvatarBlue} alt="" />
+            </div>
+
+            <div className="flex flex-col">
+              <div className="font-bold text-lg">{loggedInUser.name}</div>
+              <div className="text-sm text-silver">@{loggedInUser.username}</div>
+            </div>
+          </div>
+
+          <address className="pb-4 text-platinum not-italic">
+            <span>Feito por </span>
+            <a
+              className="text-birdBlue"
+              href="https://github.com/vinicius-godoy" target="_blank" rel="noreferrer noopener"
+            >
+              @vinicius-godoy
+            </a>
+          </address>
+        </div>
+      </aside>
+
+      <main className="lg:w-4/5 lg:border-x lg:border-silver">
+        <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
+
+        <div>
+          {data?.map((tweet) => (
+            <Tweet key={tweet.id} data={tweet} loggedInUser={loggedInUser}>
+              {tweet.text}
+            </Tweet>
+          ))}
+        </div>
+      </main>
+    </div>
   )
 }
