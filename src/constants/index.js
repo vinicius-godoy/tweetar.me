@@ -1,1 +1,1 @@
-export const MAX_TWEET_CHAR = 140
+export * from './tweet-config'
