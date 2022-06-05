@@ -1,10 +1,12 @@
 import { HeartIcon } from '@heroicons/react/outline'
 
+import AvatarBlue from '../../assets/images/avatar-blue.png'
+
 export const Tweet = ({ name, username, avatar, likes, children }) => {
   return (
     <div className="flex space-x-3 p-4 border-b border-silver">
       <div>
-        <img src={avatar} />
+        <img src={AvatarBlue} />
       </div>
       <div className="space-y-1">
         <span className="font-bold text-sm">{name}</span>{' '}

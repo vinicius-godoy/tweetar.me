@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
 
+import AvatarBlue from '../../assets/images/avatar-blue.png'
+
 import { MAX_TWEET_CHAR } from '../../constants/index'
 
 export const TweetForm = ({ loggedInUser, onSuccess }) => {
@@ -25,7 +27,7 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
   return (
     <div className="border-b border-silver p-4 space-y-8">
       <div className="flex space-x-7">
-        <img src="/src/avatar.png" className="w-7" />
+        <img src={AvatarBlue} className="w-7" />
         <h1 className="font-bold text-xl">Página Inicial</h1>
       </div>
 

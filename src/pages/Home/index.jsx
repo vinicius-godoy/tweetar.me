@@ -28,9 +28,8 @@ export const Home = ({ loggedInUser }) => {
       <div>
         {data.length && data?.map((tweet) => (
           <Tweet
-            key={tweet.id}
+            key={tweet.id} likes={tweet.likes.length}
             name={tweet.user.name} username={tweet.user.username}
-            avatar="/src/avatar.png" likes={tweet.likes.length}
           >
             {tweet.text}
           </Tweet>
