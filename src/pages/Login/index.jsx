@@ -2,6 +2,8 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
 
+import Logo from '../../assets/images/codarme-logo.png'
+
 const Input = props => (
   <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
 )
@@ -33,11 +35,16 @@ export const Login = ({ signInUser }) => {
   })
 
   return (
-    <div className="flex h-full justify-center ">
-      <div className="bg-birdBlue lg:flex-1"></div>
+    <div className="flex h-full justify-center">
+      <div className="hidden bg-birdBlue lg:flex-1 lg:flex lg:justify-center lg:items-center">
+        <img src={Logo} alt="" />
+      </div>
 
-      <div className="flex-1 flex justify-center items-center p-12 space-y-6">
-        <div className="max-w-md flex-1">
+      <div className="flex-1 flex justify-center items-center p-12">
+        <div className="max-w-md flex-1 space-y-6">
+
+          <img className="w-14 lg:hidden" src={Logo} alt="" />
+
           <h1 className="text-3xl">Acesse sua conta</h1>
 
           <form className="space-y-6" onSubmit={formik.handleSubmit}>
@@ -85,9 +92,9 @@ export const Login = ({ signInUser }) => {
             </button>
           </form>
 
-          <span className="text-sm text-silver text-center">
+          <div className="text-sm text-silver text-center">
             Não tem conta? <a href="/signup" className="text-birdBlue">Inscreva-se</a>
-          </span>
+          </div>
         </div>
       </div>
     </div>
