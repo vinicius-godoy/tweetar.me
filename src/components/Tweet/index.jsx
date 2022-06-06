@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { HeartIcon as NotLiked } from '@heroicons/react/outline'
-import { HeartIcon as Liked } from '@heroicons/react/solid'
+import { HeartIcon as Liked, TrashIcon } from '@heroicons/react/solid'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import axios from 'axios'
 
 import AvatarBlue from '../../assets/images/avatar-blue.png'
 
-export const Tweet = ({ data, children, loggedInUser }) => {
+export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
 
   const [tweet, setTweet] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -58,8 +58,20 @@ export const Tweet = ({ data, children, loggedInUser }) => {
         authorization: `Bearer ${loggedInUser.accessToken}`
       }
     })
+  }
 
-    setLiked(Boolean(res.data))
+  const deleteTweet = async (event) => {
+    event.preventDefault()
+
+    const res = await axios({
+      method: 'delete',
+      url: `${import.meta.env.VITE_API_HOST}/tweets?id=${tweet.id}`,
+      headers: {
+        authorization: `Bearer ${loggedInUser.accessToken}`
+      }
+    })
+
+    if (res.status === 200) updateTimeline()
   }
 
   useEffect(() => {
@@ -82,6 +94,7 @@ export const Tweet = ({ data, children, loggedInUser }) => {
           <div>
             <img src={AvatarBlue} />
           </div>
+
           <div className="space-y-1">
             <span className="font-bold">{tweet.user.name}</span>{' '}
             <span>@{tweet.user.username} </span>
@@ -100,6 +113,14 @@ export const Tweet = ({ data, children, loggedInUser }) => {
               <span>{tweet.likes.length}</span>
             </div>
           </div>
+
+          {tweet.user.username === loggedInUser.username && (
+            <div>
+              <button onClick={deleteTweet}>
+                <TrashIcon className="w-4 mt-1" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

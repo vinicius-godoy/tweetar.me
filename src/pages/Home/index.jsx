@@ -74,7 +74,12 @@ export const Home = ({ loggedInUser }) => {
 
         <div>
           {data?.map((tweet) => (
-            <Tweet key={tweet.id} data={tweet} loggedInUser={loggedInUser}>
+            <Tweet
+              key={tweet.id}
+              data={tweet}
+              loggedInUser={loggedInUser}
+              updateTimeline={fetchData}
+            >
               {tweet.text}
             </Tweet>
           ))}
