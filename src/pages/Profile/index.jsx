@@ -1,11 +1,12 @@
+import { useEffect } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import * as yup from 'yup'
 
+import { Header } from '../../components/Header'
 import { useAuth } from '../../hooks/useAuth'
 
 import { avatarPhoto } from '../../constants'
-import { useEffect } from 'react'
 
 const Input = props => (
   <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
@@ -83,18 +84,7 @@ export const Profile = () => {
 
   return (
     <main className="lg:w-4/5 lg:border-x lg:border-silver">
-      <header className="flex justify-center items-center p-6 border-b border-silver">
-        <div className="flex gap-4">
-          <div className="flex justify-center items-center">
-            <img className="w-16" src={avatarPhoto[user.avatar]} alt="" />
-          </div>
-
-          <div className="flex flex-col">
-            <div className="font-bold text-2xl">{user.name}</div>
-            <div className="text-silver text-xl">Perfil</div>
-          </div>
-        </div>
-      </header>
+      <Header title="Perfil" />
 
       <div className="p-12 space-y-6">
         <h2 className="text-3xl">Edite seu perfil</h2>
