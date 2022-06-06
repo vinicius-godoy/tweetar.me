@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import axios from 'axios'
 import { useFormik } from 'formik'
 
@@ -27,6 +28,14 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
     }
   })
 
+  const sendTweetButton = useRef()
+
+  const handleEnter = (event) => {
+    if (event.keyCode === 13 && event.shiftKey === false) {
+      sendTweetButton.current.click()
+    }
+  }
+
   return (
     <div className="border-b border-silver p-4 space-y-8">
       <div className="flex space-x-7">
@@ -42,6 +51,7 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
           placeholder="O que está acontencendo?"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          onKeyDown={handleEnter}
           disabled={formik.isSubmitting}
         />
 
@@ -51,6 +61,7 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
           </span>
           <button
             type="submit"
+            ref={sendTweetButton}
             className="bg-birdBlue px-5 py-2 rounded-full disabled:opacity-50"
             disabled={
               formik.values.text.length > MAX_TWEET_CHAR ||
