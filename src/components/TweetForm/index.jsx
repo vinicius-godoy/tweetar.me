@@ -3,10 +3,14 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 
 import AvatarBlue from '../../assets/images/avatar-blue.png'
+import { useAuth } from '../../hooks/useAuth'
 
 import { MAX_TWEET_CHAR } from '../../constants/index'
 
-export const TweetForm = ({ loggedInUser, onSuccess }) => {
+export const TweetForm = ({ onSuccess }) => {
+  const { user } = useAuth()
+  const sendTweetButton = useRef()
+
   const formik = useFormik({
     onSubmit: async (values, form) => {
       await axios({
@@ -16,7 +20,7 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
           text: values.text
         },
         headers: {
-          'authorization': `Bearer ${loggedInUser.accessToken}`,
+          'authorization': `Bearer ${user.accessToken}`,
         }
       })
 
@@ -27,8 +31,6 @@ export const TweetForm = ({ loggedInUser, onSuccess }) => {
       text: '',
     }
   })
-
-  const sendTweetButton = useRef()
 
   const handleEnter = (event) => {
     if (event.keyCode === 13 && event.shiftKey === false) {

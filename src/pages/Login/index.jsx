@@ -3,6 +3,7 @@ import * as yup from 'yup'
 import axios from 'axios'
 
 import Logo from '../../assets/images/codarme-logo.png'
+import { useAuth } from '../../hooks/useAuth'
 
 const Input = props => (
   <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
@@ -13,18 +14,12 @@ const validationSchema = yup.object({
   password: yup.string().required('Digite sua senha')
 })
 
-export const Login = ({ signInUser }) => {
+export const Login = () => {
+  const { login } = useAuth()
+
   const formik = useFormik({
     onSubmit: async values => {
-      const res = await axios
-        .get(`${import.meta.env.VITE_API_HOST}/login`, {
-          auth: {
-            username: values.email,
-            password: values.password,
-          }
-        })
-
-      signInUser(res.data)
+      login(values)
     },
     initialValues: {
       email: '',

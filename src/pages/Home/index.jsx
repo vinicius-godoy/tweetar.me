@@ -1,21 +1,24 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
-import { HomeIcon, BookmarkIcon, UserIcon } from '@heroicons/react/outline'
+import { Link } from 'react-router-dom'
+import { HomeIcon, BookmarkIcon, UserIcon, LogoutIcon } from '@heroicons/react/outline'
 
 import { TweetForm } from "../../components/TweetForm"
 import { Tweet } from "../../components/Tweet"
+import { useAuth } from '../../hooks/useAuth'
 import Logo from '../../assets/images/codarme-logo.png'
 import AvatarBlue from '../../assets/images/avatar-blue.png'
 
-export const Home = ({ loggedInUser }) => {
+export const Home = () => {
   const [data, setData] = useState([])
+  const { user, logout } = useAuth()
 
   const fetchData = useCallback(async () => {
     const res = await axios({
       method: 'get',
       url: `${import.meta.env.VITE_API_HOST}/tweets`,
       headers: {
-        authorization: `Bearer ${loggedInUser?.accessToken}`,
+        authorization: `Bearer ${user.accessToken}`,
       }
     })
 
@@ -34,14 +37,37 @@ export const Home = ({ loggedInUser }) => {
         </div>
 
         <ul className="space-y-6">
-          <li className="flex justify-start items-center gap-4 text-lg font-bold">
-            <HomeIcon className="w-8 m-0" /> Página Inicial
+          <li>
+            <Link
+              to="/"
+              className="flex justify-start items-center gap-4 text-lg font-bold"
+            >
+              <HomeIcon className="w-8 m-0" /> Página Inicial
+            </Link>
           </li>
-          <li className="flex justify-start items-center gap-4 text-lg font-bold">
-            <BookmarkIcon className="w-8 m-0" /> Itens Salvos
+          <li>
+            <Link
+              to="/"
+              className="flex justify-start items-center gap-4 text-lg font-bold"
+            >
+              <BookmarkIcon className="w-8 m-0" /> Itens Salvos
+            </Link>
           </li>
-          <li className="flex justify-start items-center gap-4 text-lg font-bold">
-            <UserIcon className="w-8 m-0" /> Perfil
+          <li>
+            <Link
+              to="/"
+              className="flex justify-start items-center gap-4 text-lg font-bold"
+            >
+              <UserIcon className="w-8 m-0" /> Perfil
+            </Link>
+          </li>
+          <li>
+            <button
+              className="flex justify-start items-center gap-4 text-lg text-birdBlue font-bold"
+              onClick={logout}
+            >
+              <LogoutIcon className="w-8 m-0" /> Sair
+            </button>
           </li>
         </ul>
 
@@ -52,8 +78,8 @@ export const Home = ({ loggedInUser }) => {
             </div>
 
             <div className="flex flex-col">
-              <div className="font-bold text-lg">{loggedInUser.name}</div>
-              <div className="text-sm text-silver">@{loggedInUser.username}</div>
+              <div className="font-bold text-lg">{user.name}</div>
+              <div className="text-sm text-silver">@{user.username}</div>
             </div>
           </div>
 
@@ -70,14 +96,13 @@ export const Home = ({ loggedInUser }) => {
       </aside>
 
       <main className="lg:w-4/5 lg:border-x lg:border-silver">
-        <TweetForm loggedInUser={loggedInUser} onSuccess={fetchData} />
+        <TweetForm onSuccess={fetchData} />
 
         <div>
           {data?.map((tweet) => (
             <Tweet
               key={tweet.id}
               data={tweet}
-              loggedInUser={loggedInUser}
               updateTimeline={fetchData}
             >
               {tweet.text}

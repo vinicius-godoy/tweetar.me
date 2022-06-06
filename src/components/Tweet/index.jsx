@@ -5,20 +5,22 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import axios from 'axios'
 
+import { useAuth } from '../../hooks/useAuth'
 import AvatarBlue from '../../assets/images/avatar-blue.png'
 
-export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
+export const Tweet = ({ data, children, updateTimeline }) => {
 
   const [tweet, setTweet] = useState(null)
   const [loading, setLoading] = useState(true)
   const [liked, setLiked] = useState(false)
+  const { user } = useAuth()
 
   const fetchTweet = async () => {
     const res = await axios({
       method: 'get',
       url: `${import.meta.env.VITE_API_HOST}/tweets?id=${tweet.id}`,
       headers: {
-        authorization: `Bearer ${loggedInUser.accessToken}`
+        authorization: `Bearer ${user.accessToken}`
       }
     })
 
@@ -33,7 +35,7 @@ export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
         method: 'delete',
         url: `${import.meta.env.VITE_API_HOST}/likes?tweetId=${tweet.id}`,
         headers: {
-          authorization: `Bearer ${loggedInUser.accessToken}`
+          authorization: `Bearer ${user.accessToken}`
         }
       })
       if (res.status === 200) setLiked(false)
@@ -42,7 +44,7 @@ export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
         method: 'post',
         url: `${import.meta.env.VITE_API_HOST}/likes?tweetId=${tweet.id}`,
         headers: {
-          authorization: `Bearer ${loggedInUser.accessToken}`
+          authorization: `Bearer ${user.accessToken}`
         }
       })
       if (res.status === 200) setLiked(true)
@@ -55,7 +57,7 @@ export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
       method: 'get',
       url: `${import.meta.env.VITE_API_HOST}/likes?tweetId=${tweet.id}`,
       headers: {
-        authorization: `Bearer ${loggedInUser.accessToken}`
+        authorization: `Bearer ${user.accessToken}`
       }
     })
   }
@@ -67,7 +69,7 @@ export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
       method: 'delete',
       url: `${import.meta.env.VITE_API_HOST}/tweets?id=${tweet.id}`,
       headers: {
-        authorization: `Bearer ${loggedInUser.accessToken}`
+        authorization: `Bearer ${user.accessToken}`
       }
     })
 
@@ -114,7 +116,7 @@ export const Tweet = ({ data, children, loggedInUser, updateTimeline }) => {
             </div>
           </div>
 
-          {tweet.user.username === loggedInUser.username && (
+          {tweet.user.username === user.username && (
             <div>
               <button onClick={deleteTweet}>
                 <TrashIcon className="w-4 mt-1" />
