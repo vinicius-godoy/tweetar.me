@@ -27,6 +27,8 @@ export const SignUp = ({ signInUser }) => {
       signInUser(res.data)
     },
     initialValues: {
+      name: '',
+      username: '',
       email: '',
       password: '',
     },
@@ -40,7 +42,6 @@ export const SignUp = ({ signInUser }) => {
         <h1 className="text-3xl">Crie sua conta</h1>
 
         <form className="space-y-6" onSubmit={formik.handleSubmit}>
-
           <div className="space-y-2">
             <Input
               name="name"
@@ -49,7 +50,7 @@ export const SignUp = ({ signInUser }) => {
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              disable={formik.isSubmitting}
+              disabled={formik.isSubmitting}
             />
             {(formik.touched.name && formik.errors.name) && (
               <span className="text-red-500 text-sm">
@@ -66,7 +67,7 @@ export const SignUp = ({ signInUser }) => {
               value={formik.values.username}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              disable={formik.isSubmitting}
+              disabled={formik.isSubmitting}
             />
             {(formik.touched.username && formik.errors.username) && (
               <span className="text-red-500 text-sm">
@@ -83,7 +84,7 @@ export const SignUp = ({ signInUser }) => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              disable={formik.isSubmitting}
+              disabled={formik.isSubmitting}
             />
             {(formik.touched.email && formik.errors.email) && (
               <span className="text-red-500 text-sm">
@@ -100,7 +101,7 @@ export const SignUp = ({ signInUser }) => {
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              disable={formik.isSubmitting}
+              disabled={formik.isSubmitting}
             />
             {(formik.touched.password && formik.errors.password) && (
               <span className="text-red-500 text-sm">

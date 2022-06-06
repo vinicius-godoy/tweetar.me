@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import { Home } from './pages/Home/'
 import { Login } from './pages/Login/'
 import { SignUp } from './pages/Signup'
+import { Profile } from './pages/Profile'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './hooks/useAuth'
 
@@ -16,6 +16,14 @@ export const App = () => {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

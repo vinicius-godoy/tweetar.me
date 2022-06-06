@@ -27,11 +27,24 @@ export const AuthProvider = ({ children }) => {
     navigate("/login", { replace: true })
   }
 
+  const refreshData = async () => {
+    const res = await axios({
+      method: 'get',
+      url: `${import.meta.env.VITE_API_HOST}/users`,
+      headers: {
+        authorization: `Bearer ${user.accessToken}`
+      }
+    })
+    const updatedData = { ...res.data, password: undefined }
+    setUser(state => ({ accessToken: state.accessToken, ...updatedData }))
+  }
+
   const value = useMemo(
     () => ({
       user,
       login,
-      logout
+      logout,
+      refreshData,
     }),
     [user]
   )

@@ -95,7 +95,7 @@ export const Tweet = ({ data, children, updateTimeline }) => {
       ) : (
         <div className="flex space-x-3 p-4 border-b border-silver">
           <div>
-            <img src={avatarPhoto[tweet.user.avatar]} />
+            <img className="w-12" src={avatarPhoto[tweet.user.avatar]} />
           </div>
 
           <div className="space-y-1">

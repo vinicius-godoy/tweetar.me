@@ -43,7 +43,6 @@ export const Login = () => {
           <h1 className="text-3xl">Acesse sua conta</h1>
 
           <form className="space-y-6" onSubmit={formik.handleSubmit}>
-
             <div className="space-y-2">
               <Input
                 name="email"
