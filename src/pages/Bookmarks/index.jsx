@@ -26,7 +26,7 @@ export const Bookmarks = () => {
   }, [])
 
   return (
-    <main className="lg:w-4/5 lg:border-x lg:border-silver">
+    <main className="!mb-auto overflow-y-auto lg:w-4/5 lg:border-x lg:border-silver">
       <Header title="Itens Salvos" />
 
       <div>

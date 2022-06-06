@@ -83,7 +83,7 @@ export const Profile = () => {
   }, [])
 
   return (
-    <main className="lg:w-4/5 lg:border-x lg:border-silver">
+    <main className="!mb-auto overflow-y-auto lg:w-4/5 lg:border-x lg:border-silver">
       <Header title="Perfil" />
 
       <div className="p-12 space-y-6">

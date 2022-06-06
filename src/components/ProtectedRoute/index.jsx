@@ -8,7 +8,7 @@ export const ProtectedRoute = ({ children }) => {
 
   return user
     ? (
-      <div className="h-full flex flex-col lg:flex-row lg:justify-center lg:px-40">
+      <div className="h-full flex flex-col-reverse lg:flex-row lg:justify-center lg:px-40">
         <Sidebar />
         {children}
       </div>
