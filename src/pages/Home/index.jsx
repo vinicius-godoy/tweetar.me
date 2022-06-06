@@ -9,6 +9,8 @@ import { useAuth } from '../../hooks/useAuth'
 import Logo from '../../assets/images/codarme-logo.png'
 import AvatarBlue from '../../assets/images/avatar-blue.png'
 
+import { avatarPhoto } from '../../constants'
+
 export const Home = () => {
   const [data, setData] = useState([])
   const { user, logout } = useAuth()
@@ -74,7 +76,7 @@ export const Home = () => {
         <div className="!mt-auto space-y-3">
           <div className="flex gap-4">
             <div>
-              <img src={AvatarBlue} alt="" />
+              <img src={avatarPhoto[user.avatar]} alt="" />
             </div>
 
             <div className="flex flex-col">

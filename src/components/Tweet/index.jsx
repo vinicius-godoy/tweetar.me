@@ -6,7 +6,8 @@ import { ptBR } from 'date-fns/locale'
 import axios from 'axios'
 
 import { useAuth } from '../../hooks/useAuth'
-import AvatarBlue from '../../assets/images/avatar-blue.png'
+
+import { avatarPhoto } from '../../constants'
 
 export const Tweet = ({ data, children, updateTimeline }) => {
 
@@ -94,7 +95,7 @@ export const Tweet = ({ data, children, updateTimeline }) => {
       ) : (
         <div className="flex space-x-3 p-4 border-b border-silver">
           <div>
-            <img src={AvatarBlue} />
+            <img src={avatarPhoto[tweet.user.avatar]} />
           </div>
 
           <div className="space-y-1">

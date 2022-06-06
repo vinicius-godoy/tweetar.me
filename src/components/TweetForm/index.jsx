@@ -2,10 +2,10 @@ import { useRef } from 'react'
 import axios from 'axios'
 import { useFormik } from 'formik'
 
-import AvatarBlue from '../../assets/images/avatar-blue.png'
 import { useAuth } from '../../hooks/useAuth'
 
-import { MAX_TWEET_CHAR } from '../../constants/index'
+import { MAX_TWEET_CHAR } from '../../constants'
+import { avatarPhoto } from '../../constants'
 
 export const TweetForm = ({ onSuccess }) => {
   const { user } = useAuth()
@@ -41,7 +41,7 @@ export const TweetForm = ({ onSuccess }) => {
   return (
     <div className="border-b border-silver p-4 space-y-8">
       <div className="flex space-x-7">
-        <img src={AvatarBlue} className="w-7" />
+        <img src={avatarPhoto[user.avatar]} className="w-7" />
         <h1 className="font-bold text-xl">Página Inicial</h1>
       </div>
 
