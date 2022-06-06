@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { HeartIcon as NotLiked } from '@heroicons/react/outline'
-import { HeartIcon as Liked, TrashIcon } from '@heroicons/react/solid'
+import { HeartIcon as NotLiked, BookmarkIcon as NotBookmarked } from '@heroicons/react/outline'
+import { HeartIcon as Liked, BookmarkIcon as Bookmarked, TrashIcon } from '@heroicons/react/solid'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import axios from 'axios'
@@ -14,6 +14,7 @@ export const Tweet = ({ data, children, updateTimeline }) => {
   const [tweet, setTweet] = useState(null)
   const [loading, setLoading] = useState(true)
   const [liked, setLiked] = useState(false)
+  const [bookmarked, setBookmarked] = useState(false)
   const { user } = useAuth()
 
   const fetchTweet = async () => {
@@ -53,6 +54,32 @@ export const Tweet = ({ data, children, updateTimeline }) => {
     fetchTweet()
   }
 
+  const bookmarkTweet = async (event) => {
+    event.preventDefault()
+
+    if (bookmarked) {
+      const res = await axios({
+        method: 'delete',
+        url: `${import.meta.env.VITE_API_HOST}/bookmarks?tweetId=${tweet.id}`,
+        headers: {
+          authorization: `Bearer ${user.accessToken}`
+        }
+      })
+      if (res.status === 200) setBookmarked(false)
+    } else {
+      const res = await axios({
+        method: 'post',
+        url: `${import.meta.env.VITE_API_HOST}/bookmarks?tweetId=${tweet.id}`,
+        headers: {
+          authorization: `Bearer ${user.accessToken}`
+        }
+      })
+      if (res.status === 200) setBookmarked(true)
+    }
+    fetchTweet()
+    updateTimeline()
+  }
+
   const fetchLiked = async () => {
     const res = await axios({
       method: 'get',
@@ -61,6 +88,20 @@ export const Tweet = ({ data, children, updateTimeline }) => {
         authorization: `Bearer ${user.accessToken}`
       }
     })
+
+    if (res.status === 200) setLiked(true)
+  }
+
+  const fetchBookmarked = async () => {
+    const res = await axios({
+      method: 'get',
+      url: `${import.meta.env.VITE_API_HOST}/bookmarks?tweetId=${tweet.id}`,
+      headers: {
+        authorization: `Bearer ${user.accessToken}`
+      }
+    })
+
+    if (res.status === 200) setBookmarked(true)
   }
 
   const deleteTweet = async (event) => {
@@ -85,6 +126,7 @@ export const Tweet = ({ data, children, updateTimeline }) => {
     if (!tweet) return
 
     fetchLiked()
+    fetchBookmarked()
     setLoading(false)
   }, [tweet])
 
@@ -117,13 +159,18 @@ export const Tweet = ({ data, children, updateTimeline }) => {
             </div>
           </div>
 
-          {tweet.user.username === user.username && (
-            <div>
-              <button onClick={deleteTweet}>
-                <TrashIcon className="w-4 mt-1" />
+          <div className="flex flex-col justify-start items-center space-y-2 !ml-auto">
+            <button className="hover:-translate-y-1" onClick={bookmarkTweet}>
+              {bookmarked
+                ? <Bookmarked className="w-8" />
+                : <NotBookmarked className="w-8" />}
+            </button>
+            {tweet.user.username === user.username && (
+              <button className="hover:translate-y-1" onClick={deleteTweet}>
+                <TrashIcon className="w-8" />
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </>
