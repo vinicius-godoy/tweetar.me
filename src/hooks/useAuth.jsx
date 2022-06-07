@@ -27,6 +27,11 @@ export const AuthProvider = ({ children }) => {
     navigate("/login", { replace: true })
   }
 
+  const signUpLogin = async (data) => {
+    setUser(data)
+    navigate("/")
+  }
+
   const refreshData = async () => {
     const res = await axios({
       method: 'get',
@@ -44,6 +49,7 @@ export const AuthProvider = ({ children }) => {
       user,
       login,
       logout,
+      signUpLogin,
       refreshData,
     }),
     [user]

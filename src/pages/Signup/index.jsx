@@ -2,6 +2,8 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
 
+import { useAuth } from '../../hooks/useAuth'
+
 const Input = props => (
   <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
 )
@@ -13,7 +15,9 @@ const validationSchema = yup.object({
   password: yup.string().required('Digite sua senha')
 })
 
-export const SignUp = ({ signInUser }) => {
+export const SignUp = () => {
+  const { signUpLogin } = useAuth()
+
   const formik = useFormik({
     onSubmit: async values => {
       const res = await axios
@@ -24,7 +28,7 @@ export const SignUp = ({ signInUser }) => {
           password: values.password,
         })
 
-      signInUser(res.data)
+      signUpLogin(res.data)
     },
     initialValues: {
       name: '',

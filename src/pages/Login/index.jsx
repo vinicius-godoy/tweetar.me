@@ -48,6 +48,7 @@ export const Login = () => {
                 name="email"
                 type="text"
                 placeholder="E-mail"
+                autoComplete="username"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -65,6 +66,7 @@ export const Login = () => {
                 name="password"
                 type="password"
                 placeholder="Senha"
+                autoComplete="current-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
